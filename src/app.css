@@ -1,0 +1,36 @@
+@import '@fontsource/fira-code';
+@import '@fontsource/atkinson-hyperlegible';
+
+html {
+	/* font */
+	--font-sans: 'Atkinson Hyperlegible', sans-serif;
+	--font-mono: 'Fira Code', monospace;
+    background-color: #282a36;
+}
+
+h2, p, a {
+    color: #d0d0d0;
+}
+
+html,
+body {
+	height: 100%;
+}
+
+
+ul,
+ol {
+	list-style: none;
+	padding: 0;
+}
+
+li {
+	padding-inline-start: 0;
+}
+
+.prose pre {
+	max-inline-size: 100%;
+	padding: 1rem;
+	border-radius: 8px;
+	tab-size: 2;
+}
