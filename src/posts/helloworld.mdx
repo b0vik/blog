@@ -1,21 +1,47 @@
 ---
-title: the 'jesus fuck my EYES' alarm clock
-description: giving my lighting installation few more orders of magnitude
+title: the 'jesus fuck, my EYES' alarm clock
+description: giving my lighting installation a few more orders of magnitude
 date: '2024-02-20'
 published: true
 
 ---
 
-## backstory
-about a week ago, I was digging through some of my old projects, when this little contraption caught my eye  
+### backstory
+About a week ago, I was digging through some of my old projects, when this little contraption caught my eye:  
 ![a block of aluminum with three COB LEDs glued to the top of it](todo)  
-it's an array of 3 COB LEDs i bought off aliexpress a while back, stuck to a water cooling block with some thermal glue in lieu of a proper way to mount them.
+It's a (really shoddy) LED array! The three chips on the top are 100W-rated COB LEDs, and they're mounted to a water-cooling block&mdash;I didn't have a good way to properly attach them, so I just stuck them on with thermal glue.
 
-<script>
-  import {math, display} from 'mathlifier';
-  const x = Math.ceil(Math.random()*100);
-  const displayedMath = display(`x^2 = ${x*x}`);
-</script>
 
-## not blowing up
-{@html displayedMath}
+
+
+
+### installation
+
+These LEDs are&mdash;I'm guessing&mdash;around 20% efficient, meaning that we'll need to figure out how to carry away around 240 watts if we run the array at its rated output. The array's already mounted to a water-cooling block, so all I had to do was put together a rudimentary water-cooling setup with some stuff I had around:
+![todo](todo)
+I figured that was good enough to start installing it, so I put the "reservior"/plastic bucket in my cabinet, drilled a few holes, and sat the array on top:
+![todo](todo)
+
+
+
+### mounting
+the
+
+
+### not blowing up
+So, assuming the cooling system doesn't dissipate any heat, how long can I run this at max power before something bad happens?  
+My (*very* entry-level) chem knowledge came in handy here. Both the pump and the LEDs are rated to operate up to 100°C, but I'm less sure about the tubing and reservior, so I'll see how long it'll take to get from 20 to 60°C:
+
+$$
+10\mathrm{\,L}
+\cdot(60\mathrm{°C} - 20\mathrm{°C})
+\cdot\frac{4182\space\mathrm{joules}}{\mathrm{L\cdot °C}} 
+\cdot\frac{\mathrm{1\space sec}}{\mathrm{300\space joules}}
+\cdot\frac{1\space\mathrm{hour}}{3600\space\mathrm{seconds}}
+\approx1.6\space\mathrm{hours}
+$$
+
+which is *okayish* given that we probably won't be operating at that high of a power level for more than 30 minutes at a time every 24 hours.
+
+
+

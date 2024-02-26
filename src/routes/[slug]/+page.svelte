@@ -24,25 +24,35 @@
 </article>
 
 <style>
-	article {
-		max-inline-size: var(--size-content-3);
+	title {
+		/* max-inline-size: 60ch; */
+		/* min-inline-size: 60ch; */
+		max-inline-size: 90ch;
+	}
+	 article {
+		/* max-inline-size: 768px; */
+		/* min-inline-size: 60ch; */
+		max-inline-size: 90ch;
+
+		/* width: 1000px; */
 		margin-inline: auto;
 	}
+	
 
 
 	h1 + p {
-		margin-top: var(--size-2);
-		color: var(--text-2);
+		/* margin-top: ; */
+		color: #d0d0d0;
 	}
 
 	.tags {
 		display: flex;
 		gap: var(--size-3);
 		margin-top: var(--size-7);
-	}
-
+	} 
+/* 
 	.tags > * {
 		padding: var(--size-2) var(--size-3);
 		border-radius: var(--radius-round);
-	}
+	} */
 </style>

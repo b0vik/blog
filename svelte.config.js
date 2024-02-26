@@ -5,14 +5,14 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { mdsvex, escapeSvelte } from 'mdsvex';
 import { getHighlighter } from 'shiki';
 import rehypeMathjax from 'rehype-mathjax';
-// import remarkMath from 'remark-math';
+import remarkMath from 'remark-math';
 
 
 /** @type {import('mdsvex').MdsvexOptions} */
 const mdsvexOptions = {
 	extensions: ['.mdx'],
 	rehypePlugins: [rehypeMathjax],
-	// remarkPlugins: [remarkMath],
+	remarkPlugins: [remarkMath],
 	highlight: {
 		highlighter: async (code, lang = 'text') => {
 			const highlighter = await getHighlighter({
