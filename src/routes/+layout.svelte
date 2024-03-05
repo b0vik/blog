@@ -1,13 +1,20 @@
 <script lang="ts">
 	import Footer from './footer.svelte'
 	import Header from './header.svelte'
+	import { page } from '$app/stores';  
 
 	import '../app.css'
+	
 </script>
 
 <div class="layout">
   <!-- Header -->
-	<Header />
+{#if $page.url.pathname === '/'}
+  <Header />
+{:else}
+<a href="/" style="text-decoration: none; color: #d4be98;"><h3><span style="color: #ea6962">&lt;-</span> back to main page</h3></a>
+{/if}
+	
 
 	<main>
 		<!-- Black hole for other content -->
@@ -25,11 +32,11 @@
 		display: grid;
 		grid-template-rows: auto 1fr auto;
 		margin-inline: auto;
-		padding-inline: var(--size-7);
+		padding-inline: 2rem;
 	}
 
 	main {
-		padding-block: var(--size-9);
+		padding-block: 4rem;
 	}
 
 	@media (min-width: 1440px) {

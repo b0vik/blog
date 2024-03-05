@@ -14,6 +14,7 @@
   <!-- Title -->
 	<hgroup>
 		<h2>{data.meta.title}</h2>
+		<h4>{data.meta.description}</h4>
 		<p>published {formatDate(data.meta.date)}</p>
 	</hgroup>
 
@@ -36,13 +37,6 @@
 
 		/* width: 1000px; */
 		margin-inline: auto;
-	}
-	
-
-
-	h1 + p {
-		/* margin-top: ; */
-		color: #d0d0d0;
 	}
 
 	.tags {

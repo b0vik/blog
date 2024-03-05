@@ -1,26 +1,44 @@
 @import '@fontsource/fira-code';
 @import '@fontsource/atkinson-hyperlegible';
 
+:root {
+    --bg0: #191a1a;
+    --bg1: #202121;
+    --bg: #292828;
+    --bg2: #32302f;
+    --bg3: #383432;
+    --bg4: #3c3836;
+    --bg5: #45403d;
+    --bg6: #504945;
+    --bg7: #5a524c;
+    --bg8: #665c54;
+    --bg9: #7c6f64;
+
+	color: #d4be98;
+}
+
 html {
 	/* font */
 	--font-sans: 'Atkinson Hyperlegible', sans-serif;
 	--font-mono: 'Fira Code', monospace;
-    background-color: #282a36;
-}
 
-h2, p, a, h3 {
-    color: #d0d0d0;
+	font-family: var(--font-sans);
+    background-color: var(--bg);
+	margin: 0;
+	padding: 0;
+	height: 100%
+}
+/* 
+h2, p, a, h3, h4 {
+    
 	
 }
 
-.MathJax {
-	color: #d0d0d0;
-}
 
-html,
-body {
-	height: 100%;
-}
+
+.MathJax {
+	color: #d4be98;
+} */
 
 
 ul,
@@ -35,7 +53,11 @@ li {
 
 .prose pre {
 	max-inline-size: 100%;
-	padding: 1rem;
+	/* padding: 1rem; */
 	border-radius: 8px;
 	tab-size: 2;
+}
+img {
+	max-width:  100%;
+	height: auto;
 }
