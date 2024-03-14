@@ -4,7 +4,7 @@
 :root {
     --bg0: #191a1a;
     --bg1: #202121;
-    --bg: #292828;
+    --bgdef: #292828;
     --bg2: #32302f;
     --bg3: #383432;
     --bg4: #3c3836;
@@ -15,6 +15,7 @@
     --bg9: #7c6f64;
 
 	color: #d4be98;
+	/* background-color: var(--bg) !important;  */
 }
 
 html {
@@ -23,10 +24,18 @@ html {
 	--font-mono: 'Fira Code', monospace;
 
 	font-family: var(--font-sans);
-    background-color: var(--bg);
+    background-color: var(--bgdef) !important; 
 	margin: 0;
 	padding: 0;
 	height: 100%
+}
+
+
+a:link {
+	color: #d3869b;
+}
+a:visited, a:hover, a:active {
+	color: #336264;
 }
 /* 
 h2, p, a, h3, h4 {

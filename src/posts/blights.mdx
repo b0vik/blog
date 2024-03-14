@@ -1,0 +1,139 @@
+---
+title: the 'jesus fuck, my EYES' alarm clock
+description: giving my lighting installation a few more orders of magnitude
+date: '2024-03-05'
+published: true
+---
+
+### backstory
+About a week ago, I was digging through some of my old projects, when this little contraption caught my eye:  
+  
+![a block of aluminum with three gigantic COB LEDs glued to the top of it](/blights/images/array-photo.jpg)  
+  
+It's a (really shoddy) LED array! The three chips on the top are 100W-rated COB LEDs, and they're mounted to a water-cooling block&mdash;I didn't have a good way to properly attach them, so I just stuck them on with thermal glue.
+I probably would've put it back, but an idea kinda popped into my head:
+```
+<me> hey, you know those 'sunrise alarm clock' things?
+
+<also me> oh yeah, what about 'em?
+
+<me> what if we, like, made one with a couple more orders of magnitude?
+<me> i mean what's the purpose of a 'sunrise' clock if it doesn't at least try to match the raw power of the sun right
+
+<also me> ...
+<also me> your genius and ingenuity astound me sometimes
+<also me> we shall get on this immediately
+```
+
+### installation
+
+These LEDs are (as a rough guess) around 20% efficient, meaning that we'll need to figure out how to carry away around 240 watts if we run the array at its rated output. The array's already mounted to a water-cooling block, so all I had to do was put together a rudimentary water-cooling setup with some stuff I had around. After a bit of scavenging, I found some old latex tubing, an aquarium pump, a boost converter, and a random plastic bucket, which was just enough for me to feel confident in running this thing at full power:  
+<br>
+<div class="image-container" style="display: flex; height: 35ch;"> <img src="/blights/images/jankatron-watercooling.jpg" alt="todo" style="width: 100%; height: auto; object-fit: contain;"> <img src="/blights/images/psu-pic.jpg" alt="todo" style="width: 100%; height: auto; object-fit: contain;"> </div> 
+<p style="text-align: center;">(it's a little under rating since my psu doesn't go up to 32 volts, but it's close enough)</p>
+
+To the horror and disappointment of everyone reading this, I decided this was probably sorta kinda good enough for installation. After moving some stuff around and drilling a couple holes, I managed to shove everything that was just on the floor into a cabinet.
+
+![an uncovered plastic bucket filled with water sitting inside a cabinet. there are two latex tubes running from a hole in the top of the cabinet into the bucket, as well as a temperature probe](/blights/images/early-installation-reservoir.jpg)
+![the top of a cabinet. there's a boost converter wired to an aquarium pump that's sitting in a planter and a couple of giant LEDs mounted to a water cooling block, as well as a benchtop power supply to the far right](/blights/images/early-installation-top.jpg)
+<p style="text-align: center;">why is the pump just sitting in a planter? your guess is as good as mine</p>
+
+And that was about enough to turn it on! It's not mounted yet&mdash;the array is literally just sitting flat on the top of a cabinet&mdash;but it's so ridiculously bright that you can sort of get global illumination just by pointing it anywhere. (though my walls being painted white definitely helped out a bit)
+
+### controlling the thing
+I wanted to be able to dim the array over http, so just having it directly plugged into a power supply wouldn't do. 
+I stuck a few (definitely counterfeit) [rfp30n06le](https://www.mouser.com/datasheet/2/308/rfp30n06le-1195941.pdf) fets to another watercooling block with some thermal tape. After a dodgy soldering job and some breadboarding...
+
+![a breadboard with an esp32-c3 devboard and some resistors and capacitors wired into it. in the lower half of the image, there's an aluminum watercooling block with some mosfets mounted to it](/blights/images/breadboarding.jpg)
+
+my Contraption™ was ready to be programmed.  
+   
+I've been wanting to move away from using the arduino framework for a while now, and this project seemed like a relatively simple way to get started, so I went ahead and preemptively vendor-locked myself in by making this project in esp-idf, espressif's dedicated development framework for their socs.  
+  
+Thankfully for this project, esp-idf has a really well-documented http api, so well-documented that there's already [an example project](https://github.com/espressif/esp-idf/tree/v5.2/examples/protocols/http_server/restful_server) 
+that does almost exactly what we want to do. I cloned the project and modified it a bit so that it actually controlled the leds 
+(the esp32-c3 and iirc all of espressif's socs also have a hardware pwm controller with a [fairly nice api](https://docs.espressif.com/projects/esp-idf/en/v5.2/esp32c3/api-reference/Arduinoperipherals/ledc.html) somewhat tailored to this purpose) 
+and made the temperature endpoint actually check the value of a temperature sensor, and soon enough I had a neat little rest api:
+
+`/api/v1/status, GET`
+```json
+{
+    temps: {
+        reservoir: 22.375
+    }
+    brightness: {
+        red: 0,
+        green: 0,
+        blue: 0,
+        warmwhite: 0
+    }
+}
+```
+
+`/api/v1/brightness, POST`
+```json
+{
+    red: 0,
+    green: 0,
+    blue: 0,
+    warmwhite: 1023
+}
+```
+
+I coded together a command-line client in Rust, also partly as a Learning Exercise™. There's not too much worth mentioning about it here, but here's the main help page if you're curious:
+```shell
+Usage: blights <COMMAND>
+
+Commands:
+  up    increase brightness
+  down  decrease brightness
+  set   set brightness
+  help  print this message
+
+Options:
+  -h, --help     Print help
+  -V, --version  Print version
+```
+
+### mounting
+Finally, we can get around to actually mounting this thing. I took some measurements of the LED block and designed a 3D-printed holder to keep it upright, then printed it out and mounted it to the top of the cabinet.
+
+![OnShape screenshot of a water block holder. there's a rectangular slot on the top, tilted about 30 degrees to the right. there's a pillar going down to the bottom with a couple slots for screws to mount it to the cabinet.](/blights/images/cad-screenshot.png)
+
+![the holder, screwed into the top of a cabinet](/blights/images/mounted-holder.jpg)
+
+
+### not blowing up
+I still wanted to make sure that, should the cooling system fail for one reason or another, the array wouldn't start a fire, so I put a temperature probe on the array and set up an interrupt to watch the temperature and turn it off if it ever exceeded 65°C.  
+  
+With that out of the way, there's still one major problem: the cooling system doesn't have any mechanism installed to actually dissipate the heat it carries away, so it's essentially just dumping all of it into the reservoir. I could probably just install a fan and radiator, (and I plan on doing that eventually) 
+but how long would it take for something bad to happen if I didn't? I worked out a rough, worst-case estimate:
+
+$$
+10\mathrm{\,L}
+\cdot(60\mathrm{°C} - 20\mathrm{°C})
+\cdot\frac{4182\space\mathrm{joules}}{\mathrm{L\cdot °C}} 
+\cdot\frac{\mathrm{1\space sec}}{\mathrm{300\space joules}}
+\cdot\frac{1\space\mathrm{hour}}{3600\space\mathrm{seconds}}
+\approx1.6\space\mathrm{hours}
+$$
+
+Not great, but *okayish* for the moment given that we probably won't be operating at that high of a power level for more than 30 minutes at a time every 24 hours.
+
+
+### testing it out
+I implemented a sort of sunrise-y effect with a fish one-liner:
+```fish
+for k in (seq 10 320); blight set (math "floor(($k.0/10.0)^2)-1"); sleep 2; end; sleep 20m; blight set 0
+```
+and set up a cronjob to run it when my alarm went off. Yeah, a bit hacky&mdash;a 
+better idea might be to set up NTP on-device and implement the timer/'sunrise' there&mdash;but 
+this blog is already like 20 days late and having my alarm clock be a cronjob is probably more on-brand for me anyway.
+
+Here's a video of the thing, with the 'sunrise' effect sped up by around 30x:
+
+
+
+### links
+You can find the (half-finished) cli client [here](https://github.com/b0vik/blight) and the (also half-finished) firmware [here](https://github.com/b0vik/blights_esp32_server).
+
