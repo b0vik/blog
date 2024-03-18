@@ -52,7 +52,7 @@ I've been wanting to move away from using the arduino framework for a while now,
   
 Thankfully for this project, esp-idf has a really well-documented http api, so well-documented that there's already [an example project](https://github.com/espressif/esp-idf/tree/v5.2/examples/protocols/http_server/restful_server) 
 that does almost exactly what we want to do. I cloned the project and modified it a bit so that it actually controlled the leds 
-(the esp32-c3 and iirc all of espressif's socs also have a hardware pwm controller with a [fairly nice api](https://docs.espressif.com/projects/esp-idf/en/v5.2/esp32c3/api-reference/Arduinoperipherals/ledc.html) somewhat tailored to this purpose) 
+(the esp32-c3 and iirc all of espressif's socs also have a hardware pwm controller with a [fairly nice api](https://docs.espressif.com/projects/esp-idf/en/v5.2.1/esp32c3/api-reference/peripherals/ledc.html) somewhat tailored to this purpose) 
 and made the temperature endpoint actually check the value of a temperature sensor, and soon enough I had a neat little rest api:
 
 `/api/v1/status, GET`
@@ -132,6 +132,7 @@ this blog is already like 20 days late and having my alarm clock be a cronjob is
 
 Here's a video of the thing, with the 'sunrise' effect sped up by around 30x:
 
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/mDUrG0VyKGY?si=cHbeHPtEOaJYcCJy" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 
 ### links

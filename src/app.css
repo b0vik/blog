@@ -32,9 +32,14 @@ html {
 
 
 a:link {
-	color: #d3869b;
+	color: #458588;
+
+
 }
-a:visited, a:hover, a:active {
+a:visited {
+	color: #b16286;
+}
+a:hover, a:active {
 	color: #336264;
 }
 /* 

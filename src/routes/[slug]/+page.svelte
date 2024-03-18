@@ -22,6 +22,19 @@
 	<div class="prose">
 		<svelte:component this={data.content} />
 	</div>
+
+	
+
+	<div class="comments">
+		<h3>comments</h3>
+		<script src="https://utteranc.es/client.js"
+        repo="b0vik/blog"
+        issue-term="pathname"
+        theme="gruvbox-dark"
+        crossorigin="anonymous"
+        async>
+</script>
+	</div>
 </article>
 
 <style>

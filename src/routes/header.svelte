@@ -9,27 +9,25 @@
 
 	<ul class="links">
 		<li>
-			<a href="https://b0vik.dev/">home</a>
+			<a class="otherlinks" href="https://b0vik.dev/">home</a>
 		</li>
 		<li>
-			<a href="https://wetdry.world/@max">fedi</a>
+			<a class="otherlinks" href="https://wetdry.world/@max">fedi</a>
 		</li>
         <li>
-            <a href="https://github.com/b0vik">github</a>
+            <a class="otherlinks" href="https://github.com/b0vik">github</a>
         </li>
 		<li>
-			<a href="/rss.xml" target="_blank">rss</a>
+			<a class="otherlinks" href="/rss.xml" target="_blank">rss</a>
 		</li>
 	</ul>
 </nav>
 
 <style>
-    .title,.links {
+    .title,.otherlinks {
         /* margin-block: var(--size-7); */
 		font-family: var(--font-sans);
-		color: #d0d0d0;
-
-
+		color: #d0d0d0 !important;
     }
 	nav {
     display: flex;
